@@ -17,12 +17,16 @@ public class CustomCircleEditor : Editor
         if (EditorGUI.EndChangeCheck())
         {
             Undo.RecordObject(target, "Changed Area Of Effect");
+            //Set radius for circle object
             dc.horizRadius = radius;
             dc.vertRadius = radius;
+
+            // Make sure segments doesn't go below zero
             if (segments < 0)
             {
                 segments = 0;
             }
+            //Set number of segments as int
             dc.segments = (int)segments;        
         }
     }
