@@ -260,8 +260,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   segments: 10
-  horizRadius: 3
-  vertRadius: 3
+  horizRadius: 2.3300462
+  vertRadius: 2.3300462
   offset: 0
   axis: 2
   checkValuesChanged: 1
