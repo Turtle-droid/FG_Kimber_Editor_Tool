@@ -259,9 +259,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472b2edf11f82ac4da7814b02d0fd2cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segments: 10
-  horizRadius: 2.3300462
-  vertRadius: 2.3300462
+  segments: 26
+  horizRadius: 5.6024537
+  vertRadius: 3.7784276
   offset: 0
   axis: 2
   checkValuesChanged: 1
