@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-[RequireComponent(typeof(LineRenderer))]
-
+[ExecuteAlways, RequireComponent(typeof(LineRenderer))]
 public class DrawCircle : MonoBehaviour
 {
     public enum Axis { X, Y, Z };
@@ -15,9 +13,11 @@ public class DrawCircle : MonoBehaviour
 
     [SerializeField]
     [Tooltip("The radius of the horizontal axis.")]
+    [Range(0, 10)]
     public float horizRadius = 10;
 
     [SerializeField]
+    [Range(0, 10)]
     [Tooltip("The radius of the vertical axis.")]
     public float vertRadius = 10;
 
@@ -51,6 +51,11 @@ public class DrawCircle : MonoBehaviour
         UpdateValuesChanged();
 
         CreatePoints();
+    }
+
+    public void CallUpdate()
+    {
+        Update();
     }
 
     void Update()

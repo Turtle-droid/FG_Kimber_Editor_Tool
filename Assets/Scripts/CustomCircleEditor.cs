@@ -6,7 +6,6 @@ using UnityEditor;
 public class CustomCircleEditor : Editor
 {
     
-
     public void OnSceneGUI()
     {
         DrawCircle dc = (target as DrawCircle);
@@ -26,10 +25,10 @@ public class CustomCircleEditor : Editor
        
     if (EditorGUI.EndChangeCheck())
         {
-            Undo.RecordObject(target, "Changed Area Of Effect");
+            Undo.RecordObject(target, "Changed Circle");
             //Set radius for circle object
             dc.horizRadius = horizRadius;
-            dc.vertRadius = vertRadius;
+            dc.vertRadius = vertRadius;           
 
             // Make sure segments doesn't go below zero
             if (segments < 0)
@@ -37,7 +36,9 @@ public class CustomCircleEditor : Editor
                 segments = 0;
             }
             //Set number of segments as int
-            dc.segments = (int)segments;        
+            dc.segments = (int)segments;
+
+            dc.CallUpdate();
         }
     }
 }

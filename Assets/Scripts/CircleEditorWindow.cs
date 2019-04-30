@@ -2,7 +2,6 @@
 using UnityEditor;
 
 [RequireComponent(typeof(DrawCircle))]
-
 class CircleEditorWindow : EditorWindow
 {
    
@@ -10,36 +9,67 @@ class CircleEditorWindow : EditorWindow
     GameObject myGameObject;
 
     [SerializeField]
-    float sides;
+    int segments;
 
     [SerializeField]
-    float radius;
+    float horizRadius;
+
+    [SerializeField]
+    float vertRadius;
 
     private DrawCircle circleDrawer;
 
     [MenuItem("Window/CircleEditor")]
     public static void ShowWindow()
     {
-        EditorWindow.GetWindow(typeof(CircleEditorWindow));
+       EditorWindow window = EditorWindow.GetWindow(typeof(CircleEditorWindow));
+       window.Show();
+    }
+
+    private void OnEnable()
+    {
+        myGameObject = Selection.activeGameObject;
+    }
+
+    void OnSelectionChange()
+    {
+        myGameObject = Selection.activeGameObject;
     }
 
     void OnGUI()
     {
-        // The actual window code goes here
         myGameObject = (GameObject)EditorGUILayout.ObjectField(myGameObject, typeof(GameObject), true);
 
         if (myGameObject)
         {
             circleDrawer = myGameObject.GetComponent<DrawCircle>();
 
-                if (circleDrawer)
+            if (circleDrawer)
+            {
+                EditorGUI.BeginChangeCheck();
+
+                segments = EditorGUILayout.IntSlider("Segment slider", circleDrawer.segments, 0, 1000);
+
+                horizRadius = EditorGUILayout.Slider("Horizontal radius slider", circleDrawer.horizRadius, 0, 10);
+
+                vertRadius = EditorGUILayout.Slider("Vertical radius slider", circleDrawer.vertRadius, 0, 10);
+
+                if (EditorGUI.EndChangeCheck())
                 {
-                    circleDrawer.segments = EditorGUILayout.IntSlider("Segment slider", circleDrawer.segments, 0, 1000);
+                    Undo.RecordObject(circleDrawer, "Changed Circle");
 
-                    circleDrawer.horizRadius = EditorGUILayout.Slider("Horizontal radius slider", circleDrawer.horizRadius, 0, 10);
+                    circleDrawer.segments = segments;
+                    circleDrawer.horizRadius = horizRadius;
+                    circleDrawer.vertRadius = vertRadius;
 
-                    circleDrawer.vertRadius = EditorGUILayout.Slider("Vertical radius slider", circleDrawer.vertRadius, 0, 10);
+                    circleDrawer.CallUpdate();
                 }
+            }
+
+            else
+            {
+                Debug.Log(myGameObject.name + " is not a circle drawer");
+            }
         }
     }
 }
